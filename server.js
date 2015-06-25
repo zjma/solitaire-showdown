@@ -1,8 +1,8 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http, {
-	pingTimeout:60000,
-	pingInterval:25000,
+	pingTimeout:10000,
+	pingInterval:5000,
 	maxHttpBufferSize:10000000,
 	//allowRequest:function(){},
 	transports:['polling','websocket'],

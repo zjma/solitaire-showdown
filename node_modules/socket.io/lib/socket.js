@@ -108,7 +108,7 @@ Socket.prototype.buildHandshake = function(){
   return {
     headers: this.request.headers,
     time: (new Date) + '',
-    address: this.request.connection.address(),
+    address: this.conn.remoteAddress,
     xdomain: !!this.request.headers.origin,
     secure: !!this.request.connection.encrypted,
     issued: +(new Date),
@@ -242,7 +242,10 @@ Socket.prototype.leave = function(room, fn){
   this.adapter.del(this.id, room, function(err){
     if (err) return fn && fn(err);
     debug('left room %s', room);
-    self.rooms.splice(self.rooms.indexOf(room, 1));
+    var idx = self.rooms.indexOf(room);
+    if (idx >= 0) {
+      self.rooms.splice(idx, 1);
+    }
     fn && fn(null);
   });
   return this;
@@ -256,6 +259,7 @@ Socket.prototype.leave = function(room, fn){
 
 Socket.prototype.leaveAll = function(){
   this.adapter.delAll(this.id);
+  this.rooms = [];
 };
 
 /**
@@ -380,9 +384,25 @@ Socket.prototype.ondisconnect = function(){
 };
 
 /**
+ * Handles a client error.
+ *
+ * @api private
+ */
+
+Socket.prototype.onerror = function(err){
+  if (this.listeners('error').length) {
+    this.emit('error', err);
+  } else {
+    console.error('Missing error handler on `socket`.');
+    console.error(err.stack);
+  }
+};
+
+/**
  * Called upon closing. Called by `Client`.
  *
  * @param {String} reason
+ * @param {Error} optional error object
  * @api private
  */
 

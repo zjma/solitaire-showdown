@@ -42,9 +42,12 @@ function Client(server, conn){
 Client.prototype.setup = function(){
   this.onclose = this.onclose.bind(this);
   this.ondata = this.ondata.bind(this);
+  this.onerror = this.onerror.bind(this);
   this.ondecoded = this.ondecoded.bind(this);
+
   this.decoder.on('decoded', this.ondecoded);
   this.conn.on('data', this.ondata);
+  this.conn.on('error', this.onerror);
   this.conn.on('close', this.onclose);
 };
 
@@ -57,6 +60,10 @@ Client.prototype.setup = function(){
 
 Client.prototype.connect = function(name){
   debug('connecting to namespace %s', name);
+  if (!this.server.nsps[name]) {
+    this.packet({ type: parser.ERROR, nsp: name, data : 'Invalid namespace'});
+    return;
+  }
   var nsp = this.server.of(name);
   if ('/' != name && !this.nsps['/']) {
     this.connectBuffer.push(name);
@@ -68,9 +75,9 @@ Client.prototype.connect = function(name){
     self.sockets.push(socket);
     self.nsps[nsp.name] = socket;
 
-    if ('/' == nsp.name && self.connectBuffer) {
+    if ('/' == nsp.name && self.connectBuffer.length > 0) {
       self.connectBuffer.forEach(self.connect, self);
-      delete self.connectBuffer;
+      self.connectBuffer = [];
     }
   });
 };
@@ -163,7 +170,12 @@ Client.prototype.packet = function(packet, preEncoded, volatile){
  */
 
 Client.prototype.ondata = function(data){
-  this.decoder.add(data);
+  // try/catch is needed for protocol violations (GH-1880)
+  try {
+    this.decoder.add(data);
+  } catch(e) {
+    this.onerror(e);
+  }
 };
 
 /**
@@ -183,6 +195,20 @@ Client.prototype.ondecoded = function(packet) {
       debug('no socket for namespace %s', packet.nsp);
     }
   }
+};
+
+/**
+ * Handles an error.
+ *
+ * @param {Objcet} error object
+ * @api private
+ */
+
+Client.prototype.onerror = function(err){
+  this.sockets.forEach(function(socket){
+    socket.onerror(err);
+  });
+  this.onclose('client error');
 };
 
 /**
@@ -215,6 +241,7 @@ Client.prototype.onclose = function(reason){
 
 Client.prototype.destroy = function(){
   this.conn.removeListener('data', this.ondata);
+  this.conn.removeListener('error', this.onerror);
   this.conn.removeListener('close', this.onclose);
   this.decoder.removeListener('decoded', this.ondecoded);
 };

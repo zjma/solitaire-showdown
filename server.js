@@ -1,4 +1,6 @@
+var app = require('express')();
 var http = require('http');
+var io = require('socket.io');
 var port = 18080;
 http.createServer(function (req, res){
 	res.writeHead(200, {'Content-type':'text/html'});

@@ -1,0 +1,198 @@
+#gameboard {
+	-moz-user-select: none; 
+	-khtml-user-select: none; 
+	-webkit-user-select: none; 
+	-o-user-select: none;
+	border-style: solid;
+	border-width: 8px;
+	border-radius: 40px;
+	font-family: Microsoft YaHei,sans-serif,Arial;
+}
+
+#slots, #gameboard {
+	border-color: #f0f0f0;
+}
+
+#gameboard, #slots, #myboard, #oppoboard {
+	width: 816px;
+}
+
+/*#oppoboard {
+	-khtml-transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+}
+*/
+.busycursor {
+	cursor: wait;
+}
+
+.interactable-item {
+	cursor: pointer;
+}
+
+#myboard, #oppoboard {
+	height: 313px;
+	padding-top: 32px;
+
+}
+
+.card-wrapper {
+	height: inherit;
+}
+
+div.inner-wrapper {
+	position: relative;
+	top: -48px;
+}
+
+div.mat-wrapper {
+	position: relative;
+	top: -70px;
+	z-index: -1;
+}
+
+.card-container {
+	width: 54px;/* Actually 58px, since padding-left is ignored in width. */
+	height: 70px;/* Actually 54px, since padding-top is ignored in height. */
+	padding-left: 4px;
+	padding-top: 4px;
+	border-color: #e0e0e0;
+	border-width: 4px;
+	border-style: solid;
+	border-radius: 8px;
+}
+
+#mypile-wrapper, #oppopile-wrapper {
+	float: left;
+	width: 66px;
+	margin-left: 32px;
+}
+
+#mypiletop, #oppopiletop {
+	z-index: 1;
+}
+
+#mypilenext, #oppopilenext {
+	position: relative;
+	top: -66px;
+}
+
+#myhome-wrapper, #oppohome-wrapper {
+	float: left;
+	width: 262px;
+	margin-left: 32px;
+}
+
+#myzones-wrapper, #oppozones-wrapper {
+	float: right;
+	width: 392px;
+}
+
+#mypilecount, #oppopilecount, #myhomecount, #oppohomecount {
+	width: 66px;
+	text-align: center;
+	/*font-family: Microsoft Yahei, monospace;*/
+}
+
+#myhome, #oppohome {
+	float: left;
+}
+
+#myhomeside, #oppohomeside {
+	float: left;
+	margin-left: 32px;
+	width: 48px;
+	border-right: none;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+#myhomeside0, #myhomeside1, #myhomeside2, #oppohomeside0, #oppohomeside1, #oppohomeside2 {
+	width: 50px;
+	height: 66px;
+}
+
+#myhomeside1, #oppohomeside1 {
+	position: relative;
+	top: -66px;
+	left: 32px;
+}
+
+#myhomeside2, #oppohomeside2 {
+	position: relative;
+	top: -132px;
+	left: 64px;
+}
+
+#myzone0, #myzone1, #myzone2, #myzone3, #oppozone0, #oppozone1, #oppozone2, #oppozone3 {
+	float: right;
+	height: 64px;
+	margin-right: 32px;
+	border-bottom: none;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+#slots {
+	height: 108px;
+	border-top-style: dashed;
+	border-top-width: 8px;
+	border-bottom-style: dashed;
+	border-bottom-width: 8px;
+	padding-top: 32px;
+}
+
+#slot0, #slot1, #slot2, #slot3 {
+	float: left;
+	margin-left: 32px;
+}
+
+#slot4, #slot5, #slot6, #slot7 {
+	float: right;
+	margin-right: 32px;
+}
+
+#myname, #opponame, #myscore, #opposcore {
+	width: 132px;
+}
+
+#myname, #opponame {
+	/*font-family: Microsoft YaHei, monospace;*/
+	font-size: 16px;
+	text-align: right;
+	font-weight: bold;
+	display: inline-block;
+}
+
+#myscore, #opposcore {
+	/*font-family: Microsoft YaHei, monospace;*/
+	font-size: 64px;
+	text-align: right;
+}
+
+#oppogameinfo, #mygameinfo {
+	margin-top: 270px;
+}
+
+#myscore {
+	position: absolute;
+	top: 730px;
+	color: #e0e0e0;
+}
+
+#opposcore {
+	position: absolute;
+	top: 230px;
+	color: #c0c0c0;
+}
+
+#myrq, #opporq {
+	margin-left: 1em;
+	display: inline-block;
+}
+
+.rqendlabel {
+	font-weight: bold;
+}

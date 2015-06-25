@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/res/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/res/board_abs.css" />
+    <link rel="stylesheet" type="text/css" href="/res/main.css" />
+    <link rel="stylesheet" type="text/css" href="/res/painter_bw.css" />
+    <script type="text/javascript" src="/res/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/res/jquery-ui.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/res/game.js"></script>
+    <script type="text/javascript" src="/res/dialog.js"></script>
+    <script type="text/javascript" src="/res/painter.js"></script>
+    <script type="text/javascript" src="/res/player.js"></script>
+    <script type="text/javascript" src="/res/main.js"></script>
+    <title>sol</title>
+  </head>
+  <body>
+    <audio id="put-sound" src="/res/put.mp3"></audio>
+    <audio id="turn-sound" src="/res/turn.mp3"></audio>
+    <audio id="submit-sound" src="/res/submit.mp3"></audio>
+    <audio id="shuffle-sound" src="/res/shuffle.mp3"></audio>
+	<audio id="revert-sound" src="/res/revert.mp3"></audio>
+	<audio id="lose-sound" src="/res/lose.mp3"></audio>
+	<audio id="requestend-sound" src="/res/requestend.mp3"></audio>
+    <div id="welcome-dialog">
+      <div id="validateTips"></div>
+      <hr>
+      <div id="setname-frame" class="dialog-frame" style="display: none;">
+        <div id="nameinput-wrapper">
+          <input id="nameinput" type="text" autofocus='autofocus' />
+          <div id="namelocalcheck">
+            <div id="namerule0"><div id="namerule0st"></div>2-12 characters</div>
+            <div id="namerule1"><div id="namerule1st"></div>allowed characters: [0-9a-zA-Z_]</div>
+          </div>
+        </div>
+        
+        <button id="setname-button">Enter</button>
+      </div>
+      <div id="startsearch-frame" class="dialog-frame" style="display:none;">
+        <div id="setnameresult"></div>
+        <div id="searchstatus"></div>
+        <input id="startsearch-button" type="checkbox"/><label id="startsearch-button-label" for="startsearch-button">Search opponent</label>
+      </div>
+      <div id="standby-frame" class="dialog-frame">
+        <div id="gamebrief">
+          <div>Opponent found:</div>
+          <div id='gamebriefopponame'>Tiger</div>
+        </div>
+        <input id="standby-button" type="checkbox"/><label id="standby-button-label" for="standby-button">Start(9)</label>
+      </div>
+      <div id="gameresult-frame" class="dialog-frame">
+        <div id="result-header">You win!</div>
+        <div id="playernamesinresult">
+          <div id="mynameinresult">ferrarima</div>
+          <div id="opponameinresult">Uranux</div>
+        </div>
+        <div id="playerscoresinresult">
+          <div id="myscoreinresult">103</div>
+          <div id="opposcoreinresult">75</div>
+        </div>
+        <button id="resultok-button">OK</button>
+      </div>
+      <div id="disconnectingame-frame" class="dialog-frame">
+        Reload this page to play again.
+      </div>
+    </div>
+
+<!--  -->
+    <div id="gameboard">
+      <div id="oppoboard">
+        <div id="oppopile-wrapper">
+          <div id="oppopiletop" class="card-container"></div>
+          <div id="oppopilecount">12</div>
+        </div>
+        
+        <div id="oppohome-wrapper">
+          <div id="oppohome" class="card-container"></div>
+          <div id="oppohomeside" class="card-container">
+            <div id="oppohomeside0"></div>
+            <div id="oppohomeside1"></div>
+            <div id="oppohomeside2"></div>
+          </div>
+        </div>
+        
+        <div id="oppozones-wrapper">
+
+          <div id="oppozone3" class="card-container" cardsrc="3"></div>
+          <div id="oppozone2" class="card-container" cardsrc="2"></div>
+          <div id="oppozone1" class="card-container" cardsrc="1"></div>
+          <div id="oppozone0" class="card-container" cardsrc="0"></div>
+        </div>
+        <div id="opposcore">
+        </div>
+        <div id="oppogameinfo">
+          <div id="opponame"></div>
+          <div id="opporq">
+            <input type="checkbox" id="opporeqst" disabled="disabled" />
+            <label for="opporeqst">Ready to end</label>
+          </div>
+        </div>
+      </div>
+      <div id="slots">
+        <div id="slot0" class="card-container"></div>
+        <div id="slot1" class="card-container"></div>
+        <div id="slot2" class="card-container"></div>
+        <div id="slot3" class="card-container"></div>
+        <div id="slot7" class="card-container"></div>
+        <div id="slot6" class="card-container"></div>
+        <div id="slot5" class="card-container"></div>
+        <div id="slot4" class="card-container"></div>
+      </div>
+      <div id="myboard">
+        <div id="mypile-wrapper">
+          <div id="mypiletop" class="card-container"></div>
+          <div id="mypilecount">12</div>
+        </div>
+        <div id="myhome-wrapper">
+          <div id="myhome"><div id="myhomeland" class="card-container"></div><div id="myhomecount"></div></div>
+          <div id="myhomeside" class="card-container">
+            <div id="myhomeside0"></div>
+            <div id="myhomeside1"></div>
+            <div id="myhomeside2"></div>
+          </div>
+        </div>
+        <div id="myzones-wrapper">
+          <div id="myzone3" class="card-container" cardsrc="3"></div>
+          <div id="myzone2" class="card-container" cardsrc="2"></div>
+          <div id="myzone1" class="card-container" cardsrc="1"></div>
+          <div id="myzone0" class="card-container" cardsrc="0"></div>
+        </div>
+        <div id="myscore">
+        </div>
+        <div id="mygameinfo">
+          <div id="myname"></div>
+          <div id="myrq">
+            <input type="checkbox" id="myreqst" />
+            <label for="myreqst">Ready to end</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

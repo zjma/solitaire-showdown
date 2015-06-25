@@ -1,0 +1,64 @@
+/** HTML card styles
+ * Usage:
+ * <div class="card">
+ *   <div class="card-top">
+ *     <div class="card-char">♥</div>
+ *     <div class="card-char">5</div>
+ *   </div>
+ *   <div class="card-bot">
+ *     <div class="card-char">♥</div>
+ *     <div class="card-char">5</div>
+ *   </div>
+ * </div>
+ */
+
+div.card {
+	font-size: 16px;
+	font-weight: bold;
+	height: 64px;
+	width: 48px;
+	border-style: groove;
+	border-width: 1px;
+	border-radius: 8px;
+}
+div.cardbackimg {
+	margin-top: 8px;
+	margin-left: 8px;
+	background-color: #e0e0e0;
+	height: 46px;
+	width: 30px;
+	border-color: #f0f0f0;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 4px;
+}
+
+div.card-top {
+	width: 100%;
+	height: 100%;
+	-webkit-transform: rotate(180deg);/* Safari 3.1+, Chrome */
+	-moz-transform: rotate(-180deg);/* FF3.5+ */
+	-o-transform: rotate(-180deg);/* Opera 10.5 */
+}
+
+div.card-bot {
+	position: relative;
+	top: -100%;
+}
+
+div.card-char {
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	text-align: center;
+}
+
+div.heart, div.diamond {
+	color: white;
+	background-color: black;
+}
+
+div.spade, div.club {
+	color: black;
+	background-color: white;
+}

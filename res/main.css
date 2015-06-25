@@ -1,0 +1,59 @@
+#validateTips {
+	height: 16px;
+	color: red;
+	font-size: 0.5em;
+}
+
+.no-close .ui-dialog-titlebar-close {
+	display: none;
+}
+
+#setname-button, input#nameinput, label#startsearch-button-label, label#standby-button-label, #resultok-button {
+	width: 100%;
+}
+#searchstatus {
+	height: 120px;
+	font-size: 0.5em;
+}
+
+#nameinput-wrapper, #gamebrief {
+	height: 150px;
+	font-size: 0.5em;
+}
+
+#namerule0st, #namerule1st {
+	display: inline-block;
+	width:	2em;
+}
+
+#namelocalcheck {
+	margin-top: 1em;
+}
+
+#result-header {
+	text-align: center;
+	font-size: 24px;
+}
+
+#resultok-button {
+	margin-top: 50px;
+}
+
+#playernamesinresult {
+	width: 100%;
+	height: 30px;
+	margin-top: 20px;
+}
+
+#mynameinresult, #myscoreinresult {
+	float: left;
+	width: 50%;
+	text-align: center;
+}
+
+#opponameinresult, #opposcoreinresult {
+	float: right;
+	width: 50%;
+	text-align: center;
+}
+

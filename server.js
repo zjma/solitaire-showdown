@@ -162,6 +162,7 @@ io.on('connection', function(socket){
 		var socket_oppo = map_id_to_socket[game.players[1-idx].id];
 		game.players[idx].homenext();
 		var playerdata = game.get_player_overview(idx);
+		console.log(displayname(socket.id)+' requested homenext.');
 		socket.emit('gamedata', JSON.stringify({
 			'me': playerdata,
 			'hint': 'homenext',

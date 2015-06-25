@@ -80,7 +80,7 @@ GlobalStatus = {
 				$('#startsearch-button').button('option', 'label', 'Stop');
 				$('#startsearch-button').button('enable');
 				updateTips("", false);
-				$('#searchstatus').html('Searching for an opponent for you...');
+				$('#searchstatus').html('Waiting for another player...');
 				return 'AwaitingSvrOppoSearchResult';
 			},
 			msg_oppofound: function(kwargs){
@@ -106,7 +106,7 @@ GlobalStatus = {
 		},
 		AwaitingSvrComfirmOppoSearchCancel:{
 			msg_unreadyok: function(){
-				$('#startsearch-button').button('option', 'label', 'Search for opponent');
+				$('#startsearch-button').button('option', 'label', 'Auto Match');
 				$('#startsearch-button').button('enable');
 				updateTips("", false);
 				$('#searchstatus').html('Search stopped.');
@@ -150,8 +150,9 @@ GlobalStatus = {
 				if (kwargs['me']) {
 					var oldscore = game.players[0].score;
 					game.players[0] = kwargs['me'];
+					var score_anim = (oldscore < game.players[0].score);
 					painter.draw_my_all(game.players[0], on_drop, on_doubleclick, painter.isRequestEndButtonEnabled(), on_startdrag, on_stopdrag);
-					if (oldscore < game.players[0].score) highlight_my_score();
+					if (score_anim) highlight_my_score();
 				}
 				if (kwargs['oppo']) {
 					if (kwargs['oppo']['requested_end'] == true && game.players[1]['requested_end'] == false) player.play('requestend');
@@ -252,8 +253,9 @@ GlobalStatus = {
 				if (kwargs['me']) {
 					var oldscore = game.players[0].score;
 					game.players[0] = kwargs['me'];
+					var score_anim = (oldscore < game.players[0].score);
 					painter.draw_my_all(game.players[0], on_drop, on_doubleclick, painter.isRequestEndButtonEnabled(), on_startdrag, on_stopdrag);
-					if (oldscore < game.players[0].score) highlight_my_score();
+					if (score_anim) highlight_my_score();
 					restore_cursor();
 					return 'InGameIdle';
 				}
@@ -420,7 +422,7 @@ highlight_oppo_score = function(){
 			queue: false,
 			easing: 'easeInExpo',
 			complete: function(){
-				$("#opposcore").animate({color:'#c0c0c0'},{duration:300, queue:false, easing:'easeInCubic'});
+				$("#opposcore").animate({color:'#c0c0c0'},{duration:200, queue:false, easing:'easeInCubic'});
 			}
 		}
 	);
@@ -434,7 +436,7 @@ highlight_my_score = function(){
 			queue: false,
 			easing: 'easeInExpo',
 			complete: function(){
-				$("#myscore").animate({color:'#e0e0e0'},{duration:300, queue:false, easing:'easeInCubic'});
+				$("#myscore").animate({color:'#c0c0c0'},{duration:200, queue:false, easing:'easeInCubic'});
 			}
 		}
 	);
@@ -447,7 +449,7 @@ init_dialog_frame_0 = function() {
 init_dialog_frame_1 = function() {
 	$('#setnameresult').text('Greetings, '+MyName+'.');
 	$('#startsearch-button').prop('checked', false);
-	$('#startsearch-button').button('option', 'label', 'Search for opponent');
+	$('#startsearch-button').button('option', 'label', 'Auto Match');
 	$('#startsearch-button').button('enable');
 	$('#startsearch-button').button('refresh');
 	$('#searchstatus').text('');
@@ -530,6 +532,7 @@ socket.on('oppofound', function(msg){
 	stswitch('msg_oppofound', {'opponame':msg});
 });
 socket.on('gamedata', function(msg){
+	console.log('Got gamedata');
 	var data = JSON.parse(msg);
 	if (data['hint']) player.play(map_cmd_to_sound[data['hint']]);
 	stswitch('msg_gamedata', data);

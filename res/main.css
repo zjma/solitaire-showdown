@@ -1,7 +1,7 @@
 #validateTips {
 	height: 16px;
 	color: red;
-	font-size: 0.5em;
+	font-size: 12px;
 }
 
 .no-close .ui-dialog-titlebar-close {
@@ -13,21 +13,21 @@
 }
 #searchstatus {
 	height: 120px;
-	font-size: 0.5em;
+	font-size: 12px;
 }
 
 #nameinput-wrapper, #gamebrief {
 	height: 150px;
-	font-size: 0.5em;
+	font-size: 12px;
 }
 
 #namerule0st, #namerule1st {
 	display: inline-block;
-	width:	2em;
+	width:	48px;
 }
 
 #namelocalcheck {
-	margin-top: 1em;
+	margin-top: 24px;
 }
 
 #result-header {

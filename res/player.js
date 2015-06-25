@@ -1,5 +1,12 @@
 player = {
 	init: function(){
+		var ua = navigator.userAgent.toLowerCase();
+		this.disabled = false;
+		if (ua.match(/chrome\/([\d.]+)/)==null)
+		{
+			this.disabled = true;
+			return;
+		}
 		this.sounds = {
 			'put':document.getElementById('put-sound'),
 			'turn':document.getElementById('turn-sound'),
@@ -11,6 +18,7 @@ player = {
 		};
 	},
 	play: function(soundname) {
+		if (this.disabled==true) return;
 		var key;
 		for (key in this.sounds) {
 			this.sounds[key].pause();

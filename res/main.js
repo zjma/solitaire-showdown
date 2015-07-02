@@ -58,6 +58,7 @@ GlobalStatus = {
 				updateTips("", false);
 				$('#setname-button').removeAttr('disabled');
 				init_dialog_frame_1();
+				$('#searchstatus').html('Click "Auto Match" to play.');
 				dlgmngr.show_dialog_frame(1);
 				return 'AwaitingUsrStartOppoSearch';
 			},
@@ -447,7 +448,7 @@ init_dialog_frame_0 = function() {
 }
 
 init_dialog_frame_1 = function() {
-	$('#setnameresult').text('Greetings, '+MyName+'.');
+	$('#setnameresult').text('Hi '+MyName+'.');
 	$('#startsearch-button').prop('checked', false);
 	$('#startsearch-button').button('option', 'label', 'Auto Match');
 	$('#startsearch-button').button('enable');

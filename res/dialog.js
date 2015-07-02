@@ -10,10 +10,11 @@ init: function(){
 	$("#welcome-dialog").dialog({
 		autoOpen: false,
 		dialogClass: "no-close",
+		closeOnEscape: false,
 		height: 300,
 		width: 350,
 		modal: true,
-		title: 'Sol Duel!',
+		title: 'Solitaire 1v1!',
 	});
 	for (var i=0; i<this.frame_ids.length; i++) {
 		this.frame_objs.push($('#'+this.frame_ids[i]));

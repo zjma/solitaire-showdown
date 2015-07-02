@@ -46,28 +46,28 @@ submit: function(srcz) {
 
 players: [
 	{
-		name: 'Opponent',
+		name: 'Alice',
 		score: 103,
 		requested_end: false,
 		pile: 5,
 		pile_count: 13,
 		home_count: 2,
-		homeside: [25,24,23],
-		zones: [[38,37,36,35,34,33,32,31,30,29,28,27,26],[],[],[]],
+		homeside: [26,27,28],
+		zones: [[0],[2,14],[18,4,16],[22,8,20,6]],
 	},
 	{
-		name: 'Opponent here',
+		name: 'Bob',
 		score: 103,
 		requested_end: false,
 		pile: 5,
 		pile_count: 13,
 		home_count: 2,
 		homeside: [25,24,23],
-		zones: [[38,37,36,35,34,33,32,31,30,29,28,27,26],[],[],[]],
+		zones: [[],[],[],[38,50,36,48,34,46,32,44,30,42,28,40,26]],
 	},
 ],
 
-slots: [7,8,,9,,,,],
+slots: [1,42,0,15,,,,],
 
 
 

@@ -1,3 +1,4 @@
+var BattleMgr = require('./lib/battle');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http, {
@@ -274,12 +275,6 @@ http.listen(18080, function(){});
 
 
 
-/**
- * Generate a random integer from [a, b).
- */
-function random_int(a, b) {
-	return a+Math.floor(Math.random()*(b-a));
-}
 
 displayname = function(player_id){
 	var name = map_id_to_name[player_id];
@@ -288,29 +283,10 @@ displayname = function(player_id){
 };
 
 /**
- * Generate a shuffled suit of 52 cards.
- */
-function shuffle() {
-	var cards = [];
-	var i,r,t;
-	for (i=0; i<52; i++) {
-		cards[i] = i;
-	}
-	for (i=0; i<52; i++) {
-		r = random_int(0,52);
-		t = cards[r];
-		cards[r] = cards[i];
-		cards[i] = t;
-	}
-	return cards;
-}
-
-
-/**
  * Initialize player data (by deploy cards on pile, home and zones).
  */
 function generate_player_data(player_id) {
-	var cards = shuffle();
+	var cards = BattleMgr.genShuffledDeck();
 	var i;
 	var pile = [];
 	var home = [];
